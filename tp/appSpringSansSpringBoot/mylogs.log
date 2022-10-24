@@ -1,0 +1,2 @@
+2022-07-29 10:01:16.419 DEBUG [main] [tp.appliSpring.exemple.TestMonCalculateur.testCalculer(TestMonCalculateur.java:27)] - pour x=4 , res=16.0
+2022-07-29 10:19:58.305 DEBUG [main] [tp.appliSpring.exemple.TestMonCalculateur.testCalculer(TestMonCalculateur.java:27)] - pour x=4 , res=16.0
