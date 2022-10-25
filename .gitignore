@@ -1,33 +1,29 @@
 
 
-*/*.class
-*/.settings/*
+**/*.class
+**/.settings/*
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-*/*.jar
-*/*.war
-*/*.ear
+**/*.jar
+**/*.war
+**/*.ear
 
 */node_modules
 **/node_modules
-*/target
-*/.project
-*/.classpath
-*/mylog.txt
+**/target
+**/.project
+**/.classpath
+**/mylog.txt
 
-*/*.iml
-*/.gradle
-*/local.properties
-*/.idea/caches
-*/.idea/libraries
-*/.idea/modules.xml
-*/.idea/workspace.xml
-*/.idea/navEditor.xml
-*/.idea/assetWizardSettings.xml
-*/.DS_Store
+**/*.iml
+**/.gradle
+**/local.properties
+**/.idea
+
+**/.DS_Store
 */build
 */build/*
 **/build
