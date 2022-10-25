@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>index</title>
+       <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/> 
+   </head>
+   <body>
+      <h1>index Thymeleaf</h1>
+      <hr/>
+	<a href="hello-world">hello-world</a><br/>
+	<a href="to-welcome">welcome (public)</a><br/>
+	<a href="to-welcome-authenticated">welcome-authenticated (private member)</a><br/>
+	<hr/>
+	<a href="./rest/couleur/selonLangue">exemple 1 appel WS REST</a><br/>
+	<a href="./rest/couleur/selonLangue?langue=fr">exemple 2 (fr) appel WS REST</a><br/>
+       
+   </body>
+    
+</html>

@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+   <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>tp</groupId>
+  <artifactId>springWebSocket</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+ 
+  <properties>
+		<java.version>11</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- windows/preferences/general/workspace / UTF8 avec eclipse coherent -->
+	</properties>
+	<dependencies>
+	
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+	
+	         	
+		  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- lombok sert à générer automatiquement les get/set et toString() 
+         pas de configuration supplémentaire absolument nécessaire dans intellij
+         pour que lombok fonctionne bien dans eclipse:
+           1) repérer le chemin menant à lombok.jar
+              $HOME\.m2\repository\org\projectlombok\lombok\1.18.24\lombok.jar
+           2) effectuer un double click sur lombok.jar 
+              (ou bien java -jar lombok.jar)
+           3) spécifier si besoin le chemin menant à eclipse
+           4) cliquer sur "Install" de façon à modifier eclipse.ini
+           5) arrêter et redémarrer eclipse
+           6) activer le menu Project/clean
+      -->
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+		  <!--
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>tp.....SpringApplication</mainClass>
+		        	<layout>ZIP</layout> 
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			-->
+		</plugins>
+	</build>
+
+  
+</project>
