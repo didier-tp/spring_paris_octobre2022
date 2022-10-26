@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.m2i</groupId>
-	<artifactId>appliSpring</artifactId>
+	<artifactId>appliSpringBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>appliSpring</name>
-	<description>Demo project for Spring Boot</description>
+	<name>appliSpringBoot</name>
+	<description>Spring Boot App with REST API</description>
 	<properties>
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
