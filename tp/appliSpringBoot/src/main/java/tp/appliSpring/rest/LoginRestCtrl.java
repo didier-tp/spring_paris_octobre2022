@@ -51,8 +51,10 @@ public class LoginRestCtrl {
 			loginResponse.setMessage("successful login");
 			loginResponse.setToken(jwtTokenProvider.generateToken(authentication));
 		}catch(Exception ex) {
+			System.err.println("echec auth :" + ex.getMessage());
 			loginResponse.setOk(false);
 			loginResponse.setMessage("login failed");
+			loginResponse.setToken(null);
 			return new ResponseEntity<LoginResponse>(loginResponse,HttpStatus.UNAUTHORIZED);
 		}
 		return new ResponseEntity<LoginResponse>(loginResponse,HttpStatus.OK);

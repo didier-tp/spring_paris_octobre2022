@@ -7,7 +7,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,8 +30,8 @@ import tp.appliSpring.util.MyNoAuthenticationEntryPoint;
 
 @Configuration
 @Profile("withSecurity")
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 //necessary for @PreAuthorize("hasRole('ADMIN or ...')")
 public class WebSecurityRecentConfig  {
 	//plus de extends WebSecurityConfigurerAdapter (now deprecated) !!!
@@ -40,7 +43,7 @@ public class WebSecurityRecentConfig  {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager=null;
      
 	@Bean //**** IMPORTANT *****
 	public AuthenticationManager authenticationManagerFromHttpSecurity(HttpSecurity http) throws Exception {
@@ -54,7 +57,6 @@ public class WebSecurityRecentConfig  {
 			.and().withUser("admin1").password(passwordEncoder.encode("pwd1")).roles("ADMIN")
 			.and().withUser("user2").password(passwordEncoder.encode("pwd2")).roles("USER")
 			.and().withUser("admin2").password(passwordEncoder.encode("pwd2")).roles("ADMIN");
-			
 	        this.authenticationManager = authenticationManagerBuilder.build(); //**** IMPORTANT *****
 		}
 		return this.authenticationManager; //**** IMPORTANT *****
@@ -90,7 +92,7 @@ public class WebSecurityRecentConfig  {
 		// If the user is not authenticated, returns 401
 		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 		// This is a stateless application, disable sessions
-		.authenticationManager(this.authenticationManager) //**** IMPORTANT *****
+		//.authenticationManager(this.authenticationManager) //**** IMPORTANT *****
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		// Custom filter for authenticating users using tokens
@@ -99,4 +101,6 @@ public class WebSecurityRecentConfig  {
 		
 		return http.build(); //**** IMPORTANT *****
 	} 
+	
+	
 }
