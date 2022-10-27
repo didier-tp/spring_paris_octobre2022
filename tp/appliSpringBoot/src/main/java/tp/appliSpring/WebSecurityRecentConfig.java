@@ -10,10 +10,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import tp.appliSpring.util.JwtAuthenticationFilter;
@@ -43,23 +43,19 @@ public class WebSecurityRecentConfig  {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	private AuthenticationManager authenticationManager=null;
-     
+	     
 	@Bean //**** IMPORTANT *****
 	public AuthenticationManager authenticationManagerFromHttpSecurity(HttpSecurity http) throws Exception {
-		if(this.authenticationManager==null) {
 			// Configure AuthenticationManagerBuilder
 	        AuthenticationManagerBuilder authenticationManagerBuilder =
 	        		http.getSharedObject(AuthenticationManagerBuilder.class); //**** IMPORTANT *****
-	        
+	        authenticationManagerBuilder.parentAuthenticationManager(null);//**** VERY VERY IMPORTANT in order to avoid infinite loop when .authenticate() fail
 	        authenticationManagerBuilder.inMemoryAuthentication()
 			.withUser("user1").password(passwordEncoder.encode("pwd1")).roles("USER")
 			.and().withUser("admin1").password(passwordEncoder.encode("pwd1")).roles("ADMIN")
 			.and().withUser("user2").password(passwordEncoder.encode("pwd2")).roles("USER")
 			.and().withUser("admin2").password(passwordEncoder.encode("pwd2")).roles("ADMIN");
-	        this.authenticationManager = authenticationManagerBuilder.build(); //**** IMPORTANT *****
-		}
-		return this.authenticationManager; //**** IMPORTANT *****
+	       return authenticationManagerBuilder.build(); //**** IMPORTANT *****		
 	}
 
 	
@@ -76,9 +72,9 @@ public class WebSecurityRecentConfig  {
 	//@Bean public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { ... return http.build(); }
 	
 	@Bean //**** IMPORTANT *****
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		authenticationManagerFromHttpSecurity(http); //**** IMPORTANT *****
-		
+	protected SecurityFilterChain filterChain(HttpSecurity http,AuthenticationManager authenticationManager ) throws Exception {
+				
+				
 		http.authorizeRequests()
 		.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg",
 		"/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
@@ -92,7 +88,7 @@ public class WebSecurityRecentConfig  {
 		// If the user is not authenticated, returns 401
 		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 		// This is a stateless application, disable sessions
-		//.authenticationManager(this.authenticationManager) //**** IMPORTANT *****
+		.authenticationManager(authenticationManager) //**** IMPORTANT *****
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		// Custom filter for authenticating users using tokens
